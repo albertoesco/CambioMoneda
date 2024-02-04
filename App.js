@@ -101,17 +101,31 @@ const App = () => {
   const [showInsertExchange, setShowInsertExchange] = useState(false);
   const [exchanges, setExchanges] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [amount, setAmount] = useState(0);
 
   // Nuevo Exchange
-  const AddExchangeHandler = (newExchange) => {
+  const addExchangeHandler = (newExchange) => {
     setExchanges([...exchanges, newExchange]);
     setShowInsertExchange(false);
   };
 
   // Borrar Exchange
-  const DeleteExchangeHandler = (idexchange) => {
+  const deleteExchangeHandler = (idexchange) => {
     const updatedExchanges = exchanges.filter((exchange) => exchange.id !== idexchange);
     setExchanges(updatedExchanges);
+  };
+
+  // Conversión de moneda
+  const convertCurrency = () => {
+    if (!selectedCurrency) {
+      alert('Selecciona una moneda');
+      return;
+    }
+
+    const exchangeRate = currencies[selectedCurrency].exchangeRate;
+    const result = amount * exchangeRate;
+
+    alert(`${amount} ${selectedCurrency} equivale a ${result.toFixed(2)} ${selectedCurrency}`);
   };
 
   const headerContent = (
@@ -124,7 +138,32 @@ const App = () => {
   return (
     <View style={styles.container}>
       {headerContent}
-      <Text>Selected Currency {selectedCurrency}</Text>
+      
+      {/* Nueva sección para la conversión */}
+      <View style={styles.conversionSection}>
+        <TextInput
+          style={styles.input}
+          placeholder="Cantidad a convertir"
+          keyboardType="numeric"
+          value={amount.toString()}
+          onChangeText={(text) => setAmount(parseFloat(text))}
+        />
+
+        <Picker
+          selectedValue={selectedCurrency}
+          style={styles.picker}
+          onValueChange={(itemValue) => setSelectedCurrency(itemValue)}
+        >
+          <Picker.Item label="Selecciona una moneda" value="" />
+          {Object.keys(currencies).map((currencyCode) => (
+            <Picker.Item key={currencyCode} label={currencies[currencyCode].name} value={currencyCode} />
+          ))}
+        </Picker>
+
+        <TouchableOpacity style={styles.convertButton} onPress={convertCurrency}>
+          <Text style={styles.convertButtonText}>Convertir</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Mostrar elementos */}
       <FlatList
@@ -133,7 +172,7 @@ const App = () => {
         renderItem={({ item }) => (
           <ExchangeCard
             exchange={item}
-            onDelete={() => DeleteExchangeHandler(item.id)}
+            onDelete={() => deleteExchangeHandler(item.id)}
           />
         )}
       />
@@ -143,7 +182,7 @@ const App = () => {
         <InsertExchange
           currencies={currencies}
           onCancel={() => setShowInsertExchange(false)}
-          onAddExchange={(newExchange) => AddExchangeHandler(newExchange)}
+          onAddExchange={(newExchange) => addExchangeHandler(newExchange)}
           onSelectCurrency={setSelectedCurrency}
         />
       </Modal>
@@ -171,6 +210,34 @@ const styles = StyleSheet.create({
   headerText: {
     marginLeft: 16,
     fontSize: 18,
+    fontWeight: 'bold',
+  },
+  conversionSection: {
+    marginBottom: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 10,
+  },
+  picker: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  convertButton: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  convertButtonText: {
+    color: 'white',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });

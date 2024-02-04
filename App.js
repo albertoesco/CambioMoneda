@@ -1,5 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { Image } from 'react-native';
+import FlatList from 'react-native-flatlist-data';
+import ExchangeCard from './ExchangeCard';
+import Modal from 'react-native-modal';
+import InsertExchange from './InsertExchange';
 
 const currencies = {
   "USD": {

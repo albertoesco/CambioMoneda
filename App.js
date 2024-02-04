@@ -114,7 +114,7 @@ const App = () => {
     setExchanges(updatedExchanges);
   };
 
-  const HeaderContent = (
+  const headerContent = (
     <View style={styles.header}>
       <Image style={styles.headerImage} source={require('./CambioMoneda/assets/img/inicio.png')} />
       <Text style={styles.headerText}>Currency Exchanger</Text>
@@ -155,13 +155,26 @@ const App = () => {
 };
 
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    marginTop: 100,
+    padding: 16,
+  },
+  header: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  headerImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  headerText: {
+    marginLeft: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

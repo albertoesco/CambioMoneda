@@ -1,7 +1,7 @@
-import { Image } from 'react-native';
-import FlatList from 'react-native-flatlist-data';
-import ExchangeCard from './ExchangeCard';
+import React, { useState } from 'react';
+import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
+import ExchangeCard from './ExchangeCard';
 import InsertExchange from './InsertExchange';
 
 const currencies = {
@@ -102,13 +102,13 @@ const App = () => {
   const [exchanges, setExchanges] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("");
 
-  //Nuevo Exchange
+  // Nuevo Exchange
   const AddExchangeHandler = (newExchange) => {
     setExchanges([...exchanges, newExchange]);
     setShowInsertExchange(false);
   };
 
-  //Borrar Exchange
+  // Borrar Exchange
   const DeleteExchangeHandler = (idexchange) => {
     const updatedExchanges = exchanges.filter((exchange) => exchange.id !== idexchange);
     setExchanges(updatedExchanges);
@@ -122,27 +122,24 @@ const App = () => {
   );
 
   return (
-    <View style={container}>
+    <View style={styles.container}>
       {headerContent}
       <Text>Selected Currency {selectedCurrency}</Text>
 
-      {/*Mostrar elementos*/}
+      {/* Mostrar elementos */}
       <FlatList
         data={exchanges}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => {
-          return (
-            <ExchangeCard
-              exchange={item}
-              onDelete={() => DeleteExchangeHandler(item.id)}
-            />
-          );
-        }}
+        renderItem={({ item }) => (
+          <ExchangeCard
+            exchange={item}
+            onDelete={() => DeleteExchangeHandler(item.id)}
+          />
+        )}
       />
 
-      {/*Agregar intercambio*/}
+      {/* Agregar intercambio */}
       <Modal visible={showInsertExchange} animationType="slide">
-
         <InsertExchange
           currencies={currencies}
           onCancel={() => setShowInsertExchange(false)}
@@ -153,7 +150,6 @@ const App = () => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -178,3 +174,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default App;

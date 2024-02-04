@@ -1,5 +1,124 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+
+const currencies = {
+  "USD": {
+    "id": 0,
+    "emoji": "🇺🇸",
+    "exchangeRate": 1,
+    "name": "US Dollar"
+  },
+  "EUR": {
+    "id": 1,
+    "emoji": "🇪🇺",
+    "exchangeRate": 0.89,
+    "name": "Euro"
+  },
+  "JPY": {
+    "id": 2,
+    "emoji": "🇯🇵",
+    "exchangeRate": 114.42,
+    "name": "Japanese Yen"
+  },
+  "GBP": {
+    "id": 3,
+    "emoji": "🇬🇧",
+    "exchangeRate": 0.75,
+    "name": "British Pound"
+  },
+  "AUD": {
+    "id": 4,
+    "emoji": "🇦🇺",
+    "exchangeRate": 1.35,
+    "name": "Australian Dollar"
+  },
+  "CAD": {
+    "id": 5,
+    "emoji": "🇨🇦",
+    "exchangeRate": 1.28,
+    "name": "Canadian Dollar"
+  },
+  "CHF": {
+    "id": 6,
+    "emoji": "🇨🇭",
+    "exchangeRate": 0.93,
+    "name": "Swiss Franc"
+  },
+  "CNY": {
+    "id": 7,
+    "emoji": "🇨🇳",
+    "exchangeRate": 6.36,
+    "name": "Chinese Yuan"
+  },
+  "SEK": {
+    "id": 8,
+    "emoji": "🇸🇪",
+    "exchangeRate": 8.51,
+    "name": "Swedish Krona"
+  },
+  "NZD": {
+    "id": 9,
+    "emoji": "🇳🇿",
+    "exchangeRate": 1.49,
+    "name": "New Zealand Dollar"
+  },
+  "INR": {
+    "id": 10,
+    "emoji": "🇮🇳",
+    "exchangeRate": 74.57,
+    "name": "Indian Rupee"
+  },
+  "BRL": {
+    "id": 11,
+    "emoji": "🇧🇷",
+    "exchangeRate": 5.22,
+    "name": "Brazilian Real"
+  },
+  "RUB": {
+    "id": 12,
+    "emoji": "🇷🇺",
+    "exchangeRate": 73.96,
+    "name": "Russian Ruble"
+  },
+  "ZAR": {
+    "id": 13,
+    "emoji": "🇿🇦",
+    "exchangeRate": 16.96,
+    "name": "South African Rand"
+  },
+  "MXN": {
+    "id": 14,
+    "emoji": "🇲🇽",
+    "exchangeRate": 20.45,
+    "name": "Mexican Peso"
+  }
+};
+
+const App = () => {
+  const [showInsertExchange, setShowInsertExchange] = useState(false);
+  const [exchanges, setExchanges] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+
+  //Nuevo Exchange
+  const AddExchangeHandler = (newExchange) => {
+    setExchanges([...exchanges, newExchange]);
+    setShowInsertExchange(false);
+  };
+
+  //Borrar Exchange
+  const DeleteExchangeHandler = (idexchange) => {
+    const updatedExchanges = exchanges.filter((exchange) => exchange.id !== idexchange);
+    setExchanges(updatedExchanges);
+  };
+
+  const HeaderContent = (
+    <View style={styles.header}>
+      <Image style={styles.headerImage} source={require()} />
+      <Text style={styles.headerText}>Currency Exchanger</Text>
+    </View>
+  );
+}
 
 export default function App() {
   return (

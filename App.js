@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 
@@ -114,20 +113,46 @@ const App = () => {
 
   const HeaderContent = (
     <View style={styles.header}>
-      <Image style={styles.headerImage} source={require()} />
+      <Image style={styles.headerImage} source={require('./CambioMoneda/assets/img/inicio.png')} />
       <Text style={styles.headerText}>Currency Exchanger</Text>
     </View>
   );
-}
 
-export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={container}>
+      {headerContent}
+      <Text>Selected Currency {selectedCurrency}</Text>
+
+      {/*Mostrar elementos*/}
+      <FlatList
+        data={exchanges}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => {
+          return (
+            <ExchangeCard
+              exchange={item}
+              onDelete={() => DeleteExchangeHandler(item.id)}
+            />
+          );
+        }}
+      />
+
+      {/*Agregar intercambio*/}
+      <Modal visible={showInsertExchange} animationType="slide">
+
+        <InsertExchange
+          currencies={currencies}
+          onCancel={() => setShowInsertExchange(false)}
+          onAddExchange={(newExchange) => AddExchangeHandler(newExchange)}
+          onSelectCurrency={setSelectedCurrency}
+        />
+      </Modal>
     </View>
   );
-}
+};
+
+
+
 
 const styles = StyleSheet.create({
   container: {

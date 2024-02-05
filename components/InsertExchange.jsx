@@ -1,47 +1,50 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import CurrencyComboBox from './CurrencyComboBox';
 
+//Consts and Props
 const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
   const [fromCurrency, setFromCurrency] = useState(Object.keys(currencies)[0]);
   const [toCurrency, setToCurrency] = useState(Object.keys(currencies)[1]);
   const [amount, setAmount] = useState('');
 
-  const handleAddExchange = () => {
+  const AddExchangeHandler = () => {
     if (!amount) {
       return;
     }
 
+    //Conversion
     const conversionResult = convertCurrency(amount, fromCurrency, toCurrency, currencies);
 
+    //Nuevo Exchange
     onAddExchange({
+      id: Date.now(),
       originCurrency: fromCurrency,
       destCurrency: toCurrency,
       originAmount: parseFloat(amount),
       destAmount: conversionResult,
     });
-
     onCancel();
   };
 
-  const convertCurrency = (amount, fromCurrency, toCurrency, currencies) => {
-    if (currencies === null || typeof currencies !== 'object') {
+  const convertCurrency = (amount, fromCurrency, toCurrency) => {
+    if (typeof currencies !== 'object' || currencies === null) {
       console.error('El objeto currencies no está definido o no es un objeto.');
       return "Invalid Currency";
     }
 
+    //Verificar Monedas
     if (!(fromCurrency in currencies) || !(toCurrency in currencies)) {
       console.error('Moneda no encontrada en currencies.');
       return "Invalid Currency";
     }
 
+    //Tipos Moneda
     const exchangeRateFrom = currencies[fromCurrency].exchangeRate;
     const exchangeRateTo = currencies[toCurrency].exchangeRate;
 
-    if (isNaN(exchangeRateFrom) || isNaN(exchangeRateTo) || exchangeRateFrom <= 0 || exchangeRateTo <= 0) {
-      console.error('Tipos de cambio inválidos.');
-      return "Invalid Exchange Rate";
-    }
 
+    //Conversion Moneda
     const result = (parseFloat(amount) * exchangeRateTo) / exchangeRateFrom;
 
     return result.toFixed(2);
@@ -49,31 +52,37 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
 
   return (
     <View style={styles.modalContainer}>
-      <Text>Add New Exchange</Text>
+
+      <Text>New Exchange</Text>
+
       <CurrencyComboBox
         currencies={currencies}
         selectedCurrency={fromCurrency}
         onSelectCurrency={(currency) => setFromCurrency(currency)}
       />
+
       <CurrencyComboBox
         currencies={currencies}
         selectedCurrency={toCurrency}
         onSelectCurrency={(currency) => setToCurrency(currency)}
       />
+
       <Text>Amount:</Text>
+
       <TextInput
         style={styles.input}
         value={amount}
         onChangeText={(text) => setAmount(text)}
-        keyboardType="numeric"
+        keyboardType="Numeric"
         placeholder="Enter amount"
         placeholderTextColor="#999"
       />
-      <TouchableOpacity style={styles.button} onPress={handleAddExchange}>
-        <Text>Add & Convert</Text>
+
+      <TouchableOpacity style={styles.button} onPress={AddExchangeHandler}>
+        <Text>Add and Convert</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={onCancel}>
-        <Text>Cancel</Text>
+        <Text>Cancelar</Text>
       </TouchableOpacity>
     </View>
   );

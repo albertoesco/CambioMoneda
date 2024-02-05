@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
-import Modal from 'react-native-modal';
-import ExchangeCard from './ExchangeCard';
-import InsertExchange from './InsertExchange';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import ExchangeCard from './components/ExchangeCard';
+import InsertExchange from './components/InsertExchange';
+import { Modal } from 'react-native';
 
 const currencies = {
   "USD": {
@@ -97,98 +97,68 @@ const currencies = {
   }
 };
 
-const App = () => {
-  const [showInsertExchange, setShowInsertExchange] = useState(false);
-  const [exchanges, setExchanges] = useState([]);
-  const [selectedCurrency, setSelectedCurrency] = useState("");
-  const [amount, setAmount] = useState(0);
+  const App = () => {
+    const [showInsertExchange, setShowInsertExchange] = useState(false);
+    const [exchanges, setExchanges] = useState([]);
+    const [selectedCurrency, setSelectedCurrency] = useState("");
+  
+    //New Exchange
+    const AddExchangeHandler = (newExchange) => {
+      const exchange = {
+        id: exchanges.length,
+        ...newExchange,
+      };
 
-  // Nuevo Exchange
-  const addExchangeHandler = (newExchange) => {
-    setExchanges([...exchanges, newExchange]);
-    setShowInsertExchange(false);
-  };
-
-  // Borrar Exchange
-  const deleteExchangeHandler = (idexchange) => {
-    const updatedExchanges = exchanges.filter((exchange) => exchange.id !== idexchange);
-    setExchanges(updatedExchanges);
-  };
-
-  // Conversión de moneda
-  const convertCurrency = () => {
-    if (!selectedCurrency) {
-      alert('Selecciona una moneda');
-      return;
-    }
-
-    const exchangeRate = currencies[selectedCurrency].exchangeRate;
-    const result = amount * exchangeRate;
-
-    alert(`${amount} ${selectedCurrency} equivale a ${result.toFixed(2)} ${selectedCurrency}`);
-  };
-
-  const headerContent = (
-    <View style={styles.header}>
-      <Image style={styles.headerImage} source={require('./CambioMoneda/assets/img/inicio.png')} />
-      <Text style={styles.headerText}>Currency Exchanger</Text>
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      {headerContent}
-      
-      {/* Nueva sección para la conversión */}
-      <View style={styles.conversionSection}>
-        <TextInput
-          style={styles.input}
-          placeholder="Cantidad a convertir"
-          keyboardType="numeric"
-          value={amount.toString()}
-          onChangeText={(text) => setAmount(parseFloat(text))}
-        />
-
-        <Picker
-          selectedValue={selectedCurrency}
-          style={styles.picker}
-          onValueChange={(itemValue) => setSelectedCurrency(itemValue)}
+      setExchanges([...exchanges, exchange]);
+      setShowInsertExchange(false);
+    };
+  
+    //Delete Exchange
+    const DeleteExchangeHandler = (exchangeId) => {
+      const updatedExchanges = exchanges.filter((exchange) => exchange.id !== exchangeId);
+      setExchanges(updatedExchanges);
+    };
+  
+    const headerContent = (
+      <View style={styles.header}>
+        <Image style={styles.headerImage} source={require('./assets/images/ep_mon.png')} />
+        <Text style={styles.headerText}>Currency Exchange</Text>
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={() => setShowInsertExchange(true)}
         >
-          <Picker.Item label="Selecciona una moneda" value="" />
-          {Object.keys(currencies).map((currencyCode) => (
-            <Picker.Item key={currencyCode} label={currencies[currencyCode].name} value={currencyCode} />
-          ))}
-        </Picker>
-
-        <TouchableOpacity style={styles.convertButton} onPress={convertCurrency}>
-          <Text style={styles.convertButtonText}>Convertir</Text>
+          <Image style={styles.buttonImage} source={require('./assets/images/zondicons_add-outline.png')} />
         </TouchableOpacity>
       </View>
-
-      {/* Mostrar elementos */}
-      <FlatList
+    );
+  
+    return (
+      <View style={styles.container}>{headerContent}
+        <Text>Selected Currency: {selectedCurrency}</Text>
+  
+        <FlatList
         data={exchanges}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <ExchangeCard
-            exchange={item}
-            onDelete={() => deleteExchangeHandler(item.id)}
-          />
-        )}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          return (
+            <ExchangeCard exchange={item} onDelete={() => DeleteExchangeHandler(item.id)} />
+          );
+        }}
       />
 
-      {/* Agregar intercambio */}
-      <Modal visible={showInsertExchange} animationType="slide">
-        <InsertExchange
-          currencies={currencies}
-          onCancel={() => setShowInsertExchange(false)}
-          onAddExchange={(newExchange) => addExchangeHandler(newExchange)}
-          onSelectCurrency={setSelectedCurrency}
-        />
-      </Modal>
-    </View>
-  );
-};
+        <Modal visible={showInsertExchange}>
+          <InsertExchange
+            currencies={currencies}
+            onCancel={() => setShowInsertExchange(false)}
+            onAddExchange={AddExchangeHandler}
+            onSelectCurrency={setSelectedCurrency}
+          />
+        </Modal>
+      </View>
+    );
+  };
+  
+
 
 const styles = StyleSheet.create({
   container: {
@@ -212,33 +182,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  conversionSection: {
-    marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-  },
-  picker: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-  convertButton: {
-    backgroundColor: 'blue',
+  headerButton: {
     padding: 10,
+    backgroundColor: 'white',
     borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 10,
   },
-  convertButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+  buttonImage: {
+    width: 20,
+    height: 20,
   },
 });
 

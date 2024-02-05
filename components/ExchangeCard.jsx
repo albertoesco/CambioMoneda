@@ -1,42 +1,62 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const ExchangeCard = ({ exchange, onDelete }) => {
   if (!exchange) {
     return null;
   }
-  console.log(exchange)
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.text}>{exchange.emojiTo}</Text>
-        <Text style={styles.content}>{exchange.originCurrency}</Text>
+        <View style={styles.emojiContainer}>
+          <View>
+            <Text style={styles.content}>{exchange.originCurrency}</Text>
+            <Text style={styles.emoji}>{exchange.emojiFrom}</Text>
+            <Text style={styles.content}>{exchange.originAmount}</Text>
+          </View>
+          <Image source={require('../assets/images/uil_arrows-h.png')} style={styles.imageStyle} />
+          <View>
+            <Text style={styles.content}>{exchange.destCurrency}</Text>
+            <Text style={styles.emoji}>{exchange.emojiTo}</Text>
+            <Text style={styles.content}>{exchange.destAmount}</Text>
+          </View>
+        </View>
 
-        <Text style={styles.text}>Dest Currency:</Text>
-        <Text style={styles.content}>{exchange.destCurrency}</Text>
-
-        <Text style={styles.text}>Origin Amount:</Text>
-        <Text style={styles.content}>{exchange.originAmount}</Text>
-
-        <Text style={styles.text}>Dest Amount:</Text>
-        <Text style={styles.content}>{exchange.destAmount}</Text>
+        <View style={styles.deleteButtonContainer}>
+          <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
+            <Text style={styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
-        <Text style={styles.deleteText}>Delete</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
+    marginVertical: 1,
   },
   card: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
+    width: 345,
+    height: 142,
+    marginTop: 70,
+    marginLeft: 23,
+    backgroundColor: "#d3e09d",
+    borderRadius: 13,
+    padding: 16,
+  },
+  emojiContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  imageStyle: {
+    width: 125,
+  },
+  emoji: {
+    fontSize: 20,
   },
   text: {
     fontSize: 16,
@@ -46,15 +66,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
+  deleteButtonContainer: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+  },
   deleteButton: {
     backgroundColor: 'red',
-    padding: 10,
-    alignItems: 'center',
-    marginTop: 10,
+    padding: 8,
+    borderRadius: 5,
+    alignSelf: 'flex-end',
   },
   deleteText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 

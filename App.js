@@ -97,46 +97,45 @@ const currencies = {
   }
 };
 
-  const App = () => {
-    const [showInsertExchange, setShowInsertExchange] = useState(false);
-    const [exchanges, setExchanges] = useState([]);
-    const [selectedCurrency, setSelectedCurrency] = useState("");
-  
-    //New Exchange
-    const AddExchangeHandler = (newExchange) => {
-      const exchange = {
-        id: exchanges.length,
-        ...newExchange,
-      };
+const App = () => {
+  const [showInsertExchange, setShowInsertExchange] = useState(false);
+  const [exchanges, setExchanges] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState("");
 
-      setExchanges([...exchanges, exchange]);
-      setShowInsertExchange(false);
+  //New Exchange
+  const AddExchangeHandler = (newExchange) => {
+    const exchange = {
+      id: exchanges.length,
+      ...newExchange,
     };
-  
-    //Delete Exchange
-    const DeleteExchangeHandler = (exchangeId) => {
-      const updatedExchanges = exchanges.filter((exchange) => exchange.id !== exchangeId);
-      setExchanges(updatedExchanges);
-    };
-  
-    const headerContent = (
-      <View style={styles.header}>
-        <Image style={styles.headerImage} source={require('./assets/images/ep_money.png')} />
-        <Text style={styles.headerText}>Currency Exchange</Text>
-        <TouchableOpacity
-          style={styles.headerButton}
-          onPress={() => setShowInsertExchange(true)}
-        >
-          <Image style={styles.buttonImage} source={require('./assets/images/zondicons_add-outline.png')} />
-        </TouchableOpacity>
-      </View>
-    );
-  
-    return (
-      <View style={styles.container}>{headerContent}
-        <Text>Selected Currency: {selectedCurrency}</Text>
-  
-        <FlatList
+
+    setExchanges([...exchanges, exchange]);
+    setShowInsertExchange(false);
+  };
+
+  //Delete Exchange
+  const DeleteExchangeHandler = (exchangeId) => {
+    const updatedExchanges = exchanges.filter((exchange) => exchange.id !== exchangeId);
+    setExchanges(updatedExchanges);
+  };
+
+  const headerContent = (
+    <View style={styles.header}>
+      <Image style={styles.headerImage} source={require('./assets/images/ep_money.png')} />
+      <Text style={styles.headerText}>Currency Exchange</Text>
+      <TouchableOpacity
+        style={styles.headerButton}
+        onPress={() => setShowInsertExchange(true)}
+      >
+        <Image style={styles.buttonImage} source={require('./assets/images/zondicons_add-outline.png')} />
+      </TouchableOpacity>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>{headerContent}
+
+      <FlatList
         data={exchanges}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
@@ -146,24 +145,24 @@ const currencies = {
         }}
       />
 
-        <Modal visible={showInsertExchange}>
-          <InsertExchange
-            currencies={currencies}
-            onCancel={() => setShowInsertExchange(false)}
-            onAddExchange={AddExchangeHandler}
-            onSelectCurrency={setSelectedCurrency}
-          />
-        </Modal>
-      </View>
-    );
-  };
-  
+      <Modal visible={showInsertExchange}>
+        <InsertExchange
+          currencies={currencies}
+          onCancel={() => setShowInsertExchange(false)}
+          onAddExchange={AddExchangeHandler}
+          onSelectCurrency={setSelectedCurrency}
+        />
+      </Modal>
+    </View>
+  );
+};
+
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 100,
+    marginTop: 20,
     padding: 16,
   },
   header: {
@@ -173,18 +172,22 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   headerImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 128,
+    height: 129,
+    marginTop: 35,
+    marginLeft: 21
   },
   headerText: {
-    marginLeft: 16,
-    fontSize: 18,
+    width: 174,
+    height: 59,
+    marginTop: 49,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   headerButton: {
-    padding: 10,
-    backgroundColor: 'white',
+    width: 28,
+    height: 27,
+    marginTop: 131,
     borderRadius: 5,
   },
   buttonImage: {
@@ -192,5 +195,6 @@ const styles = StyleSheet.create({
     height: 20,
   },
 });
+
 
 export default App;

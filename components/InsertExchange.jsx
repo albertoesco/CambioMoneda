@@ -19,8 +19,8 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
     //Nuevo Exchange
     onAddExchange({
       id: Date.now(),
-      emojiTo:currencies[toCurrency].emoji,
-      emojiFrom:currencies[fromCurrency].emoji,
+      emojiTo: currencies[toCurrency].emoji,
+      emojiFrom: currencies[fromCurrency].emoji,
       originCurrency: fromCurrency,
       destCurrency: toCurrency,
       originAmount: parseFloat(amount),
@@ -55,7 +55,7 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
   return (
     <View style={styles.modalContainer}>
 
-      <Text>New Exchange</Text>
+      <Text>Origin Exchange</Text>
 
       <CurrencyComboBox
         currencies={currencies}
@@ -63,6 +63,7 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
         onSelectCurrency={(currency) => setFromCurrency(currency)}
       />
 
+      <Text>Destiny Exchange</Text>
       <CurrencyComboBox
         currencies={currencies}
         selectedCurrency={toCurrency}

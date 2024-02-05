@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import CurrencyComboBox from './CurrencyComboBox';
 
 //Consts and Props
@@ -54,39 +54,42 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
 
   return (
     <View style={styles.modalContainer}>
+      <Image source={require('../assets/images/clarity_dollar-solid.png')} style={styles.imageStyleDollar} />
 
-      <Text>Origin Exchange</Text>
-
-      <CurrencyComboBox
-        currencies={currencies}
-        selectedCurrency={fromCurrency}
-        onSelectCurrency={(currency) => setFromCurrency(currency)}
-      />
-
-      <Text>Destiny Exchange</Text>
-      <CurrencyComboBox
-        currencies={currencies}
-        selectedCurrency={toCurrency}
-        onSelectCurrency={(currency) => setToCurrency(currency)}
-      />
-
-      <Text>Amount:</Text>
-
-      <TextInput
-        style={styles.input}
-        value={amount}
-        onChangeText={(text) => setAmount(text)}
-        keyboardType="Numeric"
-        placeholder="Enter amount"
-        placeholderTextColor="#999"
-      />
-
-      <TouchableOpacity style={styles.button} onPress={AddExchangeHandler}>
-        <Text>Add and Convert</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onCancel}>
-        <Text>Cancelar</Text>
-      </TouchableOpacity>
+      <View style={styles.viewcont}>
+        <Text>Origin currency:</Text>
+        <CurrencyComboBox style={styles.originComboBox}
+          currencies={currencies}
+          selectedCurrency={fromCurrency}
+          onSelectCurrency={(currency) => setFromCurrency(currency)}
+        />
+        <View>
+          <Text>Amount:</Text>
+          <TextInput
+            style={styles.input}
+            value={amount}
+            onChangeText={(text) => setAmount(text)}
+            keyboardType="Numeric"
+            placeholder="Enter amount"
+            placeholderTextColor="#999"
+          />
+        </View>
+        <Image source={require('../assets/images/maki_arrow.png')} style={styles.imageStyle} />
+        <Text>Destination currency:</Text>
+        <CurrencyComboBox
+          currencies={currencies}
+          selectedCurrency={toCurrency}
+          onSelectCurrency={(currency) => setToCurrency(currency)}
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={AddExchangeHandler}>
+            <Text style={styles.textButton}>Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={onCancel}>
+            <Text style={styles.textButton}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -96,20 +99,52 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fffee1',
+    textDecorationColor: '#d27c2c'
+  },
+  viewcont: {
+    width: "90%",
+    alignItems: 'center',
   },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#d27c2c',
     padding: 8,
     marginVertical: 5,
     width: 200,
   },
-  button: {
-    padding: 10,
-    backgroundColor: 'blue',
-    borderRadius: 5,
+  buttonContainer: {
+    flexDirection: 'row',
     marginTop: 10,
   },
+  button: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#d27c2c',
+    borderRadius: 5,
+    marginRight: 5,
+  },
+  textButton: {
+    color: 'white',
+    textAlign: 'center',
+  },
+  imageStyle: {
+    marginTop: 20,
+    marginBottom: 20
+  },
+  imageStyleDollar: {
+    marginBottom: 30
+  },
+  originComboBox: {
+    width: 264,
+    height: 45,
+    margintop: 299,
+    marginleft: 64,
+    borderradius: 12,
+    border: 1,
+    borderBlockColor: '#d27c2c'
+  },
+
 });
 
 export default InsertExchange;

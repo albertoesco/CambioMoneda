@@ -7,26 +7,28 @@ const ExchangeCard = ({ exchange, onDelete }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.emojiContainer}>
-          <View>
-            <Text style={styles.content}>{exchange.originCurrency}</Text>
-            <Text style={styles.emoji}>{exchange.emojiFrom}</Text>
-            <Text style={styles.content}>{exchange.originAmount}</Text>
+    <View style={styles.general}>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <View style={styles.emojiContainer}>
+            <View>
+              <Text style={styles.content}>{exchange.originCurrency}</Text>
+              <Text style={styles.emoji}>{exchange.emojiFrom}</Text>
+              <Text style={styles.content}>{exchange.originAmount}</Text>
+            </View>
+            <Image source={require('../assets/images/uil_arrows-h.png')} style={styles.imageStyle} />
+            <View>
+              <Text style={styles.content}>{exchange.destCurrency}</Text>
+              <Text style={styles.emoji}>{exchange.emojiTo}</Text>
+              <Text style={styles.content}>{exchange.destAmount}</Text>
+            </View>
           </View>
-          <Image source={require('../assets/images/uil_arrows-h.png')} style={styles.imageStyle} />
-          <View>
-            <Text style={styles.content}>{exchange.destCurrency}</Text>
-            <Text style={styles.emoji}>{exchange.emojiTo}</Text>
-            <Text style={styles.content}>{exchange.destAmount}</Text>
-          </View>
-        </View>
 
-        <View style={styles.deleteButtonContainer}>
-          <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
-            <Text style={styles.deleteText}>Delete</Text>
-          </TouchableOpacity>
+          <View style={styles.deleteButtonContainer}>
+            <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
+              <Image source={require('../assets/images/lets-icons_remove.png')} style={styles.deleteStyle} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -34,6 +36,7 @@ const ExchangeCard = ({ exchange, onDelete }) => {
 };
 
 const styles = StyleSheet.create({
+
   container: {
     marginVertical: 1,
   },
@@ -71,6 +74,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   deleteButton: {
+    position: 'absolute',
     backgroundColor: 'red',
     padding: 8,
     borderRadius: 5,
@@ -80,6 +84,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
   },
+  deleteStyle: {
+    position: 'relative',
+    marginTop: 0
+  }
 });
 
 export default ExchangeCard;

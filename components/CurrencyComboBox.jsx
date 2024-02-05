@@ -10,7 +10,7 @@ const CurrencyComboBox = ({ currencies, onSelectCurrency }) => {
   }
 
   return (
-    <RNPickerSelect
+    <RNPickerSelect style={StyleSheet.picket}
       onValueChange={handleCurrencyChange}
       items={Object.keys(currencies).map((currencyCode) => ({
         label: `${currencies[currencyCode].emoji} ${currencies[currencyCode].name}`,

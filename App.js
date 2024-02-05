@@ -121,7 +121,7 @@ const currencies = {
   
     const headerContent = (
       <View style={styles.header}>
-        <Image style={styles.headerImage} source={require('./assets/images/ep_mon.png')} />
+        <Image style={styles.headerImage} source={require('./assets/images/ep_money.png')} />
         <Text style={styles.headerText}>Currency Exchange</Text>
         <TouchableOpacity
           style={styles.headerButton}

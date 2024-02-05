@@ -4,6 +4,7 @@ import ExchangeCard from './components/ExchangeCard';
 import InsertExchange from './components/InsertExchange';
 import { Modal } from 'react-native';
 
+//Podriamos mover los datos de currencies a otro archivo separado
 const currencies = {
   "USD": {
     "id": 0,
@@ -135,6 +136,16 @@ const App = () => {
   return (
     <View style={styles.container}>{headerContent}
 
+      {/*Otra forma de hacerlo*/}
+      {/*
+<FlatList
+  data={state.exchanges}
+  keyExtractor={(item) => item.id.toString()}
+  renderItem={({ item }) => (
+    <ExchangeCard exchange={item} onDelete={() => dispatch({ type: "DELETE_EXCHANGE", payload: item.id })} />
+  )}
+/>
+  */}
       <FlatList
         data={exchanges}
         keyExtractor={(item) => item.id}
@@ -156,8 +167,6 @@ const App = () => {
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {

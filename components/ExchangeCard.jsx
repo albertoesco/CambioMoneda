@@ -23,12 +23,9 @@ const ExchangeCard = ({ exchange, onDelete }) => {
               <Text style={styles.content}>{exchange.destAmount}</Text>
             </View>
           </View>
-
-          <View style={styles.deleteButtonContainer}>
-            <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
-              <Image source={require('../assets/images/lets-icons_remove.png')} style={styles.deleteStyle} />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
+            <Image source={require('../assets/images/lets-icons_remove.png')} style={styles.deleteStyle} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -75,7 +72,6 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     position: 'absolute',
-    backgroundColor: 'red',
     padding: 8,
     borderRadius: 5,
     alignSelf: 'flex-end',

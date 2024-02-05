@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const ExchangeCard = ({ exchange, onDelete }) => {
   if (!exchange) {
     return null;
   }
-
+  console.log(exchange)
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.text}>Origin Currency:</Text>
+        <Text style={styles.text}>{exchange.emojiTo}</Text>
         <Text style={styles.content}>{exchange.originCurrency}</Text>
 
         <Text style={styles.text}>Dest Currency:</Text>

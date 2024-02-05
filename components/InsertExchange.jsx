@@ -19,6 +19,8 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
     //Nuevo Exchange
     onAddExchange({
       id: Date.now(),
+      emojiTo:currencies[toCurrency].emoji,
+      emojiFrom:currencies[fromCurrency].emoji,
       originCurrency: fromCurrency,
       destCurrency: toCurrency,
       originAmount: parseFloat(amount),

@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
+import React, { useState } from 'react'
+import RNPickerSelect from 'react-native-picker-select'
 
 const CurrencyComboBox = ({ currencies, onSelectCurrency }) => {
-  const [selectedCurrency, setSelectedCurrency] = useState(Object.keys(currencies)[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState(Object.keys(currencies)[0])
 
   const handleCurrencyChange = (currency) => {
-    setSelectedCurrency(currency);
-    onSelectCurrency(currency);
-  };
+    setSelectedCurrency(currency)
+    onSelectCurrency(currency)
+  }
 
   return (
-    <Picker
-      selectedValue={selectedCurrency}
-      onValueChange={(itemValue) => handleCurrencyChange(itemValue)}
-    >
-      {Object.keys(currencies).map((currencyCode) => (
-        <Picker.Item
-          key={currencyCode}
-          label={`${currencies[currencyCode].emoji} ${currencies[currencyCode].name}`}
-          value={currencyCode}
-        />
-      ))}
-    </Picker>
-  );
-};
+    <RNPickerSelect
+      onValueChange={handleCurrencyChange}
+      items={Object.keys(currencies).map((currencyCode) => ({
+        label: `${currencies[currencyCode].emoji} ${currencies[currencyCode].name}`,
+        value: currencyCode,
+      }))}
+    />
+  )
+}
 
-export default CurrencyComboBox;
+export default CurrencyComboBox

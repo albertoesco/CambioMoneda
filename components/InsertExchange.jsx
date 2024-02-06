@@ -61,7 +61,7 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
     <View style={styles.modalContainer}>
       <Image source={require('../assets/images/clarity_dollar-solid.png')} style={styles.imageStyleDollar} />
 
-      <View style={styles.viewcont}>
+      <View style={styles.view}>
         <Text>Origin currency:</Text>
         <CurrencyComboBox style={styles.originComboBox}
           currencies={currencies}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffee1',
     textDecorationColor: '#d27c2c'
   },
-  viewcont: {
+  view: {
     width: "90%",
     alignItems: 'center',
   },

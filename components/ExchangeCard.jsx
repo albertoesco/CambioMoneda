@@ -66,10 +66,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  deleteButtonContainer: {
-    alignSelf: 'flex-end',
-    marginTop: 10,
-  },
   deleteButton: {
     position: 'absolute',
     padding: 8,

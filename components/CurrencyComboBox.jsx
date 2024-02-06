@@ -21,6 +21,7 @@ const CurrencyComboBox = ({ currencies, onSelectCurrency }) => {
       />
     </View>
   )
+  //En vez de unsar el RNPicker podiamos haber usado simplemente el Picker, el problema era que me daba ERRORES que no sabia solucionar
   {/*return (
     <View style={[styles.comboBox, style]}>
       <Picker

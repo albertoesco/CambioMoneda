@@ -128,7 +128,7 @@ const App = () => {
         style={styles.headerButton}
         onPress={() => setShowInsertExchange(true)}
       >
-        <Image style={styles.buttonImage} source={require('./assets/images/zondicons_add-outline.png')} />
+        <Image style={styles.buttonImageStyle} source={require('./assets/images/zondicons_add-outline.png')} />
       </TouchableOpacity>
     </View>
   );
@@ -181,6 +181,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 16,
   },
+  buttonImageStyle: {
+    width: 20,
+    height: 20,
+  },
   headerImage: {
     width: 128,
     height: 129,
@@ -199,10 +203,6 @@ const styles = StyleSheet.create({
     height: 27,
     marginTop: 131,
     borderRadius: 5,
-  },
-  buttonImage: {
-    width: 20,
-    height: 20,
   },
 });
 

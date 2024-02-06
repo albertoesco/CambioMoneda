@@ -14,30 +14,35 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
     }
 
     //Conversion
+    //En vez de usar Object.keys(), puedo desestructurar el objeto currencies directamente para obtener las monedas.
+    /*const { [0]: fromCurrency, [1]: toCurrency } = Object.keys(currencies); */
     const conversionResult = convertCurrency(amount, fromCurrency, toCurrency, currencies);
 
     //Nuevo Exchange
     onAddExchange({
-      id: Date.now(),
-      emojiTo: currencies[toCurrency].emoji,
-      emojiFrom: currencies[fromCurrency].emoji,
       originCurrency: fromCurrency,
       destCurrency: toCurrency,
       originAmount: parseFloat(amount),
       destAmount: conversionResult,
+      id: Date.now(),
+      emojiTo: currencies[toCurrency].emoji,
+      emojiFrom: currencies[fromCurrency].emoji,
     });
     onCancel();
   };
 
   const convertCurrency = (amount, fromCurrency, toCurrency) => {
+    //if (!currencies || typeof currencies !== 'object') {}
     if (typeof currencies !== 'object' || currencies === null) {
-      console.error('El objeto currencies no está definido o no es un objeto.');
+      console.error('El objeto no está definido.');
       return "Invalid Currency";
     }
 
     //Verificar Monedas
+    //Podria haber creado una constante fromCurrency
+    /* const { [fromCurrency]: fromCurrencyInfo, [toCurrency]: toCurrencyInfo } = currencies;*/
     if (!(fromCurrency in currencies) || !(toCurrency in currencies)) {
-      console.error('Moneda no encontrada en currencies.');
+      console.error('No se ha encontrado la moneda.');
       return "Invalid Currency";
     }
 
@@ -121,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     backgroundColor: '#d27c2c',
-    borderRadius: 5,
+    borderRadius: 3,
     marginRight: 5,
   },
   textButton: {

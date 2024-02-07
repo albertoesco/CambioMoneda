@@ -73,8 +73,18 @@ const InsertExchange = ({ currencies, onAddExchange, onCancel }) => {
           <TextInput
             style={styles.input}
             value={amount}
-            onChangeText={(text) => setAmount(text)}
-            keyboardType="Numeric"
+            onChangeText={(text) => {
+              // Verificar si el texto contiene solo números
+              if (/^\d*\.?\d*$/.test(text)) {
+                //Actualizar estado
+                setAmount(text);
+              } else {
+                //Mensaje de error
+                alert('Solo son válidos números en este campo');
+              }
+            }}
+            keyboardType="numeric"
+            onSubmitEditing={AddExchangeHandler}
             placeholder="Enter amount"
             placeholderTextColor="#999"
           />
